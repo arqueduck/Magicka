@@ -1,7 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import sys
-sys.path.append("C:\VSCode\Faculdade\Projetos\PythonGame") #Adiciona o caminho do projeto ao path do python
 
 import pygame as pg
 from code.const import *
@@ -15,7 +13,9 @@ class Menu:
         
 
     def run(self):
-        pg.mixer_music.load("assets/menu_music_menu.wav")
+        pg.init()
+        pg.mixer.init()
+        pg.mixer_music.load("assets/menu_music.wav")
         pg.mixer_music.play(-1)
         pg.mixer_music.set_volume(0.2)
         while self.running:
@@ -30,7 +30,6 @@ class Menu:
                 if event.type == pg.QUIT:
                     self.running = False
                     pg.quit()
-                    sys.exit()
                     print("Menu loop finished")
               
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos:tuple):
