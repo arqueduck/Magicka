@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pygame as pg
+from code.level import Level
 from code.const import *
 from code.menu import Menu
 
@@ -13,15 +14,15 @@ class Game:
     def run(self, ):
         while True:
             menu = Menu(self.window)
-            menu.run()
-            pass
+            menu_return = menu.run()
             
-            # Check for events
-            # for event in pg.event.get():
-            #     if event.type == pg.QUIT:
-            #         pg.quit() # Close the window
-            #         print("Main loop finished")
-            #         quit()    # Close the program
-
-
-
+            if menu_return in [MENU_OPTION[0], MENU_OPTION[1], MENU_OPTION[2]]:
+                print("Starting game")
+                level = Level(self.window, "Level 1", menu_return)
+                level_return = level.run()
+            elif menu_return == MENU_OPTION[3]:
+                print("Exiting game")
+                pg.quit()
+                quit()
+            else:
+                pass
