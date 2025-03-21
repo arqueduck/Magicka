@@ -7,8 +7,12 @@ C_YELLOW = 255, 255, 0
 ENTITY_SPEED = {
     "Level1Bg0": 1,
     "Level1Bg1": 2,
-    "Level1Bg2": 2,
-    "Level1Bg3": 3,
+    "Level1Bg2": 3,
+    "Level1Bg3": 4,
+    "Level1Bg4": 5,
+    "Level1Bg5": 6,
+    "Level1Bg6": 6,
+    "Level1Bg7": 6,
 }
 
 # M
