@@ -1,3 +1,5 @@
+import pygame as pg
+
 # C
 C_RED = 255, 20, 0
 C_WHITE = 255, 255, 255
@@ -13,11 +15,15 @@ ENTITY_SPEED = {
     "Level1Bg5": 6,
     "Level1Bg6": 6,
     "Level1Bg7": 6,
+    "Player1": 2,
+    "Player2": 3,
+    "Enemy": 4,
 }
 
+ENEMY_SPAWN_DELAY = pg.userevent + 1
+
 # M
-MENU_OPTION = ("Start 1 Player", 
-               "Start 2 Players", 
+MENU_OPTION = ("Start Game", 
                "High Scores", 
                "Exit")
 
