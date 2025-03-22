@@ -88,9 +88,53 @@ class Level:
                             if e.name == "Enemy" and attack_rect.colliderect(e.rect):
                                 self.entity_list.remove(e)
                                 
+                                
+            player = None
+            for ent in self.entity_list:
+                if isinstance(ent, Player):
+                    player = ent
+                    break
+
+            # Check collision with enemies
+            if player and player.alive:
+                hurtbox = player.get_hurtbox()
+                for ent in self.entity_list:
+                    if ent.name == "Enemy" and hurtbox.colliderect(ent.rect):
+                        player.take_damage()
+                        
             self.level_text(20, f"Level: {self.name} - Timeout: {self.timeout / 100:.1f}s", (C_WHITE), (WIN_WIDTH - 650, WIN_HEIGHT - 20))
             self.level_text(20, f"FPS: {clock.get_fps():.0f}", (C_WHITE), (WIN_WIDTH - 45, WIN_HEIGHT - 35))
             self.level_text(20, f"Entidades: {len(self.entity_list)}", (C_WHITE), (WIN_WIDTH - 70, WIN_HEIGHT - 20))
+            
+            if player:
+                self.level_text(20, f"HP: {player.health}", C_RED, (60, 30))
+                
+            if player and not player.alive:
+                self.level_text(50, "GAME OVER", C_RED, (WIN_WIDTH // 2, WIN_HEIGHT // 2 - 30))
+                self.level_text(25, "Press any key to exit", C_WHITE, (WIN_WIDTH // 2, WIN_HEIGHT // 2 + 30))
+                pg.display.flip()
+
+                # Pause game loop and wait for any key press or quit
+                waiting = True
+                while waiting:
+                    for event in pg.event.get():
+                        if event.type == pg.QUIT:
+                            pg.quit()
+                            sys.exit()
+                        elif event.type == pg.KEYDOWN:
+                            waiting = False
+
+                return "Game Over"
+            # The below code is for debugging purposes
+            # for ent in self.entity_list:
+            #     if isinstance(ent, Player):
+            #         hurtbox = ent.get_hurtbox()
+            #         pg.draw.rect(self.window, C_GREEN, hurtbox, 2)
+                    
+            #     if isinstance(ent, Player) and ent.is_attacking:
+            #         attack_rect = ent.get_attack_rect()
+            #         if attack_rect:
+            #             pg.draw.rect(self.window, (255, 0, 0), attack_rect, 2)
             
             pg.display.flip()
                 

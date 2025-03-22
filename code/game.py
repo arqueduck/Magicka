@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 import pygame as pg
 from code.level import Level
 from code.const import *
@@ -20,9 +21,13 @@ class Game:
                 print("Starting game")
                 level = Level(self.window, "Level 1", menu_return)
                 level_return = level.run()
-            elif menu_return == MENU_OPTION[2]:
-                print("Exiting game")
-                pg.quit()
-                quit()
+                if level_return == "Game Over":
+                    continue
+                
+            elif menu_return == MENU_OPTION[2] or menu_return == "Quit":
+                return
+                
             else:
                 pass
+    
+ 

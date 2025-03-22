@@ -37,8 +37,7 @@ class Menu:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     self.running = False
-                    pg.quit()
-                    print("Menu loop finished")
+                    return "Quit"
                     
                 ## Check if a key is pressed
                 if event.type == pg.KEYDOWN:

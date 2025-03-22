@@ -8,7 +8,6 @@ from code.entity import Entity
 
 class Player(Entity):
     def __init__(self, name_prefix: str, position: tuple):
-        # Don't load the image yet — we'll load all frames instead
         self.frames = [
             pg.transform.scale(
                 pg.image.load(f"./assets/{name_prefix}_{i}.png"), (WIN_WIDTH // 3, WIN_HEIGHT // 4)
@@ -35,15 +34,17 @@ class Player(Entity):
         self.attack_cooldown = 600
         self.last_attack_time = 0
         
+        self.health = 3
+        self.invulnerable = False
+        self.invuln_duration = 1000  # 1 second
+        self.last_hit_time = 0
+        self.alive = True
+        
         # Use first frame for init
         self.surf = self.frames[0]
         self.rect = self.surf.get_rect(left=position[0], top=position[1])
         self.name = name_prefix
         self.speed = ENTITY_SPEED["Player1"]
-
-    def get_attack_rect(self):
-        attack_rect = pg.Rect(self.rect.right, self.rect.top + 20, 40, self.rect.height - 40)
-        return attack_rect
 
     def set_bounds(self, bounds: pg.Rect):
         self.movement_bounds = bounds
@@ -69,6 +70,9 @@ class Player(Entity):
         if self.movement_bounds:
             self.rect.clamp_ip(self.movement_bounds)
 
+        if self.invulnerable and pg.time.get_ticks() - self.last_hit_time > self.invuln_duration:
+            self.invulnerable = False
+        
         # Animate
         if self.is_attacking:
             if now - self.last_update > self.animation_speed:
@@ -88,4 +92,26 @@ class Player(Entity):
     def get_attack_rect(self):
         if not self.is_attacking:
             return None
-        return pg.Rect(self.rect.right - 60, self.rect.top - 10, 90, self.rect.height +20)
+        return pg.Rect(self.rect.right - 95, self.rect.top - 10, 90, self.rect.height +20)
+    
+    def take_damage(self):
+        now = pg.time.get_ticks()
+        if not self.invulnerable and self.alive:
+            self.health -= 1
+            self.last_hit_time = now
+            self.invulnerable = True
+            if self.health <= 0:
+                self.alive = False
+
+    def get_hurtbox(self):
+        width = self.rect.width * 0.5
+        height = self.rect.height * 0.78
+        offset_x = self.rect.width * 0.15
+        offset_y = self.rect.height * 0.22
+
+        return pg.Rect(
+            self.rect.left + offset_x,
+            self.rect.top + offset_y,
+            width,
+            height
+        )
