@@ -20,7 +20,7 @@ ENTITY_SPEED = {
     "Enemy": 4,
 }
 
-ENEMY_SPAWN_DELAY = pg.userevent + 1
+ENEMY_SPAWN_DELAY = 1000
 
 # M
 MENU_OPTION = ("Start Game", 

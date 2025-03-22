@@ -75,18 +75,29 @@ class Level:
             for ent in self.entity_list[:]:
                 if "Level1Bg" not in getattr(ent, "name", ""):
                     ent.move()
-
+                    
                     if getattr(ent, "name", "") == "Enemy" and ent.rect.left <= self.player_bounds.left:
                         self.entity_list.remove(ent)
                         continue
 
                     self.window.blit(ent.surf, ent.rect)
-                    pg.display.flip()
-                    pass
+                    
+                    if isinstance(ent, Player) and ent.is_attacking:
+                        attack_rect = ent.get_attack_rect()
+                        for e in self.entity_list[:]:
+                            if e.name == "Enemy" and attack_rect.colliderect(e.rect):
+                                self.entity_list.remove(e)
+                                
+            self.level_text(20, f"Level: {self.name} - Timeout: {self.timeout / 100:.1f}s", (C_WHITE), (WIN_WIDTH - 650, WIN_HEIGHT - 20))
+            self.level_text(20, f"FPS: {clock.get_fps():.0f}", (C_WHITE), (WIN_WIDTH - 45, WIN_HEIGHT - 35))
+            self.level_text(20, f"Entidades: {len(self.entity_list)}", (C_WHITE), (WIN_WIDTH - 70, WIN_HEIGHT - 20))
+            
+            pg.display.flip()
+                
+            
         
     def level_text(self, text_size: int, text: str, text_color: tuple, text_position:tuple):
         font = pg.font.SysFont("Arial", text_size)
         text = font.render(text, True, text_color).convert_alpha()
         text_rect = text.get_rect(center=text_position)
         self.window.blit(text, text_rect)
-        pass
