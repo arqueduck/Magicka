@@ -16,7 +16,7 @@ class Menu:
         menu_option = 0
         pg.init()
         pg.mixer.init()
-        pg.mixer_music.load("assets/menu_music.wav")
+        pg.mixer_music.load("assets/menu_music.mp3")
         pg.mixer_music.play(-1)
         pg.mixer_music.set_volume(0.2)
         
