@@ -47,11 +47,21 @@ class Menu:
                         menu_option = (menu_option + 1) % len(MENU_OPTION)
                     if event.key == pg.K_RETURN: ## Select option
                         return MENU_OPTION[menu_option] 
+                          
+    def menu_text(self, text_size: int, text: str, text_color: tuple, text_position: tuple):
+            font = pg.font.SysFont("Arial", text_size, bold=True)
             
+            # Render main text
+            main_surface = font.render(text, True, text_color).convert_alpha()
+            main_rect = main_surface.get_rect(center=text_position)
 
-              
-    def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos:tuple):
-        font = pg.font.SysFont("Arial", text_size)
-        text = font.render(text, True, text_color).convert_alpha()
-        text_rect = text.get_rect(center=text_center_pos)
-        self.window.blit(text, text_rect)
+            # Render outline
+            outline_surface = font.render(text, True, (0, 0, 0)).convert_alpha()
+            
+            offsets = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # left, right, up, down
+            for dx, dy in offsets:
+                outline_rect = outline_surface.get_rect(center=(text_position[0] + dx, text_position[1] + dy))
+                self.window.blit(outline_surface, outline_rect)
+            
+            # Blit final text on top
+            self.window.blit(main_surface, main_rect)
