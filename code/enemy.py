@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import random
 import pygame as pg
 from code.const import *
 from code.entity import Entity
@@ -31,7 +32,7 @@ class Enemy(Entity):
         self.rect = self.surf.get_rect(topleft=position)
 
         self.name = "Enemy"
-        self.speed = ENTITY_SPEED["Enemy"]
+        self.speed = ENTITY_SPEED["Enemy"] + random.uniform(-3, 2)
         self.movement_bounds = None
 
     def set_bounds(self, bounds: pg.Rect):
@@ -43,7 +44,7 @@ class Enemy(Entity):
         # Animate
         now = pg.time.get_ticks()
         if now - self.last_update > self.animation_speed:
-            self.frame_index = (self.frame_index + 1) % len(self.frames)
+            self.frame_index = random.randint(0, len(self.frames) - 1)
             self.surf = self.frames[self.frame_index]
             self.last_update = now
 

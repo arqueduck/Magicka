@@ -7,6 +7,7 @@ from code.entity import Entity
 from code.entityFactory import EntityFactory
 from code.const import *
 from code.player import Player
+from code.score_db import save_score
 
 class Level:
     def __init__(self, window, name, game_mode):
@@ -147,7 +148,10 @@ class Level:
                             sys.exit()
                         elif event.type == pg.KEYDOWN:
                             waiting = False
-
+                            
+                initials = self.get_player_initials(self.window, self.score)
+                save_score(initials, self.score)
+                    
                 return "Game Over"
             
             self.level_text(20, f"Score: {self.score}", C_YELLOW, (70, 50))            
@@ -174,6 +178,9 @@ class Level:
                         elif event.type == pg.KEYDOWN:
                             waiting = False
 
+                initials = self.get_player_initials(self.window, self.score)
+                save_score(initials, self.score)
+                
                 return "Game Over"
             # The below code is for debugging purposes
             # for ent in self.entity_list:
@@ -198,7 +205,51 @@ class Level:
             pg.display.flip()
                 
             
-        
+    def get_player_initials(self, window, score):
+        initials = ["A", "A", "A"]
+        current_index = 0
+        clock = pg.time.Clock()
+
+        font = pg.font.SysFont("Arial", 40, bold=True)
+        running = True
+
+        while running:
+            clock.tick(30)
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    sys.exit()
+                elif event.type == pg.KEYDOWN:
+                    if event.key == pg.K_RETURN:
+                        running = False
+                    elif event.key == pg.K_LEFT and current_index > 0:
+                        current_index -= 1
+                    elif event.key == pg.K_RIGHT and current_index < 2:
+                        current_index += 1
+                    elif event.key == pg.K_UP:
+                        initials[current_index] = chr(((ord(initials[current_index]) - 65 + 1) % 26) + 65)
+                    elif event.key == pg.K_DOWN:
+                        initials[current_index] = chr(((ord(initials[current_index]) - 65 - 1) % 26) + 65)
+
+            self.window.fill((0, 0, 0))
+
+            # Display instructions
+            msg = f"Enter your initials - Score: {score}"
+            instr_surface = font.render(msg, True, C_WHITE)
+            instr_rect = instr_surface.get_rect(center=(WIN_WIDTH // 2, 100))
+            window.blit(instr_surface, instr_rect)
+
+            # Display initials
+            for i, letter in enumerate(initials):
+                color = C_YELLOW if i == current_index else C_WHITE
+                letter_surface = font.render(letter, True, color)
+                rect = letter_surface.get_rect(center=(WIN_WIDTH // 2 - 50 + i * 50, WIN_HEIGHT // 2))
+                window.blit(letter_surface, rect)
+
+            pg.display.flip()
+
+        return "".join(initials)
+
     def level_text(self, text_size: int, text: str, text_color: tuple, text_position: tuple):
         font = pg.font.SysFont("Arial", text_size, bold=True)
         

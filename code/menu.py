@@ -3,6 +3,7 @@
 
 import pygame as pg
 from code.const import *
+from code.high_scores import high_scores_screen
 
 class Menu:
     def __init__(self, window):
@@ -14,11 +15,11 @@ class Menu:
 
     def run(self):
         menu_option = 0
-        pg.init()
-        pg.mixer.init()
         pg.mixer_music.load("assets/menu_music.mp3")
         pg.mixer_music.play(-1)
         pg.mixer_music.set_volume(0.2)
+        arrow1 = "> "
+        arrow2 = " <"
         
         while self.running:
             ## Draw the background
@@ -27,7 +28,7 @@ class Menu:
             ## Draw the menu options
             for i in range(len(MENU_OPTION)):
                 if i == menu_option:
-                    self.menu_text(30, MENU_OPTION[i], (C_YELLOW), ((WIN_WIDTH / 2), 320 + i * 50))
+                    self.menu_text(30, arrow1 + MENU_OPTION[i] + arrow2, (C_YELLOW), ((WIN_WIDTH / 2), 320 + i * 50))
                 else:
                     self.menu_text(30, MENU_OPTION[i], (C_WHITE), ((WIN_WIDTH / 2), 320 + i * 50))
             pg.display.flip()
@@ -45,8 +46,13 @@ class Menu:
                         menu_option = (menu_option - 1) % len(MENU_OPTION)
                     if event.key == pg.K_DOWN: ## Move down
                         menu_option = (menu_option + 1) % len(MENU_OPTION)
-                    if event.key == pg.K_RETURN: ## Select option
-                        return MENU_OPTION[menu_option] 
+                    if event.key in [pg.K_RETURN, pg.K_SPACE]: ## Select option
+                        selected = MENU_OPTION[menu_option] 
+                        
+                        if selected == "High Scores":
+                            high_scores_screen(self.window)
+                        else:
+                            return selected
                           
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_position: tuple):
             font = pg.font.SysFont("Arial", text_size, bold=True)

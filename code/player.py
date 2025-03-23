@@ -31,12 +31,12 @@ class Player(Entity):
         # Attack animation
         self.is_attacking = False
         self.attack_frame_index = 0
-        self.attack_cooldown = 600
+        self.attack_cooldown = ATTACK_COOLDOWN
         self.last_attack_time = 0
         
-        self.health = 3
+        self.health = DEFAULT_HEALTH
         self.invulnerable = False
-        self.invuln_duration = 1000  # 1 second
+        self.invuln_duration = INVULNERABILITY_DURATION
         self.last_hit_time = 0
         self.alive = True
         
