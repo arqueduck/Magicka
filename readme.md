@@ -32,7 +32,6 @@ This project was developed for educational purposes as part of a college course,
 
 - Fully animated player and enemy sprites
 - Responsive movement and attack logic
-- Pause menu with translucent overlay
 - Game over screen with score display
 - Score system based on survived and defeated enemies
 - Time-limited gameplay (20 seconds)
