@@ -47,6 +47,9 @@ To run the project from source:
 
 ```bash
 pip install pygame
+
+```
+
 Python 3.10+ is recommended. The game uses only Pygame and SQLite3, no extra dependencies required.
 
 ---
@@ -54,37 +57,38 @@ Python 3.10+ is recommended. The game uses only Pygame and SQLite3, no extra dep
 ## 🛠️ Build & Distribution
 This game was successfully compiled into a standalone .exe using:
 
+```bash
 pyinstaller --noconfirm --windowed main.py --add-data "assets;assets"
+```
 
 Assets are stored in a folder named assets located beside the .exe for portability.
 
 ---
 
 ## 📁 Project Structure
+```bash
 Magicka/
 ├── assets/                # Game images, music and sprites
 ├── code/                  # All game logic (player, enemy, menu, level...)
 ├── main.py                # Entry point
 ├── README.md              # This file
-
+```
 ---
 
 ## 🎨 Assets & Credits
 All assets used in this project are available under free or permissive licenses for non-commercial use. Full credit to the original creators:
 
 ### 🔊 Sound & Music
-"Cinematic Menu Loop" by Gregor Quendel
-freesound.org link
+["Cinematic Menu Loop"](https://freesound.org/people/GregorQuendel/sounds/718663/) by Gregor Quendel
 
-"Arcade Punch FX" by Ilariio
-freesound.org link
+["Ominous Nightfall Atmosphere"](https://freesound.org/people/Ilariio/sounds/793493/) by Ilariio
 
 ### 🧙‍♂️ Sprites & Visuals
-Bat Sprite Pack by Elthen
+[Bat Sprite Pack](https://elthen.itch.io/bat-sprite-pack) by Elthen
 
-Hero Knight sprite by Sventhole
+[Hero Knight](https://sventhole.itch.io/hero-knight) sprite by Sventhole
 
-Fantasy Battleground Backgrounds by Free Game Assets
+[Fantasy Battleground Backgrounds](https://free-game-assets.itch.io/free-pixel-art-fantasy-game-battlegrounds) by Free Game Assets
 
 These assets were used solely for educational and demonstrative purposes.
 
