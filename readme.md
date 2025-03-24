@@ -99,5 +99,5 @@ This project was developed strictly for learning purposes and is not intended fo
 ---
 
 ## 🙌 Credits
-Developed by Arqueduck
-Game powered by Pygame
+- Developed by Arqueduck
+- Game powered by Pygame
