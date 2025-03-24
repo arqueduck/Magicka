@@ -98,6 +98,6 @@ This project was developed strictly for learning purposes and is not intended fo
 
 ---
 
-🙌 Credits
+## 🙌 Credits
 Developed by Arqueduck
 Game powered by Pygame
